@@ -760,9 +760,13 @@ private:
         /*
             international number
         */
-        pdu += "91";
+        std::string number = phone;
+        if (!number.empty() && number[0] == '+')
+            number.erase(0, 1);
 
-        pdu += TextUtils::encodePhone(phone);
+        pdu += TextUtils::toHex(number.size());
+        pdu += "91";
+        pdu += TextUtils::encodePhone(number);
 
         /*
             PID
@@ -905,9 +909,13 @@ private:
 
         pdu += TextUtils::toHex(number.size());
 
-        pdu += "91";
+        std::string number = phone;
+        if (!number.empty() && number[0] == '+')
+            number.erase(0, 1);
 
-        pdu += TextUtils::encodePhone(phone);
+        pdu += TextUtils::toHex(number.size());
+        pdu += "91";
+        pdu += TextUtils::encodePhone(number);
 
         /*
             PID
@@ -972,6 +980,8 @@ private:
         const std::string &pdu,
         int tpduLength)
     {
+        std::cout << "PDU: " << pdu << std::endl;
+        std::cout << "TPDU len: " << tpduLength << std::endl;
         writeRaw(
             "AT+CMGS=" +
             std::to_string(tpduLength) +
