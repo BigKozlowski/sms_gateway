@@ -1,0 +1,7 @@
+.env
+build/
+CMakeFiles/
+CMakeCache.txt
+*.o
+
+.DS_Store
